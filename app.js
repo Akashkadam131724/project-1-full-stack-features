@@ -1,11 +1,15 @@
 const express = require("express");
-
+const connectDB = require("./db/conn");
 const app = express();
+const homeRouter = require("./routes/home");
+const postRouter = require("./routes/posts");
 
-app.get("/", (req, res) => {
-  res.send("<h1>Welcome Akash</h1>");
-});
+app.use("/", homeRouter);
 
-app.listen(3000, () => {
-  console.log("listening on http://localhost:3000");
+app.use("/posts", postRouter);
+
+connectDB().then(() => {
+  app.listen(3000, () => {
+    console.log("listening on http://localhost:3000");
+  });
 });
